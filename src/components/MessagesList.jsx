@@ -1,5 +1,12 @@
 import React from "react";
+import Message from "./Message";
 
 export default function MessagesList({ messages }) {
-  return <div>MessagesList</div>;
+  return (
+    <>
+      {messages.map((message) => {
+        return <Message key={message.id} {...message} />;
+      })}
+    </>
+  );
 }
