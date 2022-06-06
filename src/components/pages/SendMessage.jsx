@@ -13,6 +13,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { Service } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 export default function SendMessage({ author }) {
   const [recipients, setRecipients] = useState([""]);
@@ -20,6 +21,7 @@ export default function SendMessage({ author }) {
   const [message, setMessage] = useState("");
   const [searchParams] = useSearchParams();
   const mdParser = new MarkdownIt();
+  const navigate = useNavigate();
 
   function handleEditorChange({ html, text }) {
     setMessage(text);
@@ -45,6 +47,8 @@ export default function SendMessage({ author }) {
       title,
       recipients,
       replyId,
+    }).then(() => {
+      navigate("/");
     });
   };
 
