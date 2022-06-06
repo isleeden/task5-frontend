@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Card, Collapse } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 
@@ -13,9 +13,11 @@ const Message = ({
   replyTo,
   hideReply,
 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <Card className="mb-3">
-      <Card.Header className="d-flex justify-content-between">
+      <Card.Header className="d-flex justify-content-between" onClick={() => setOpen(!open)}>
         <h4>
           <Link to={`/${id}`}>{title}</Link>
         </h4>
@@ -25,18 +27,20 @@ const Message = ({
           ""
         )}
       </Card.Header>
-      <Card.Body>
-        <p className="text-small">
-          From: <em>{author}</em>
-        </p>
-        <p className="text-small">
-          For: <em>{recipient}</em>
-        </p>
-        <hr></hr>
-        <div>
-          <ReactMarkdown>{message}</ReactMarkdown>
-        </div>
-      </Card.Body>
+      <Collapse in={open}>
+        <Card.Body>
+          <p className="text-small">
+            From: <em>{author}</em>
+          </p>
+          <p className="text-small">
+            For: <em>{recipient}</em>
+          </p>
+          <hr></hr>
+          <div>
+            <ReactMarkdown>{message}</ReactMarkdown>
+          </div>
+        </Card.Body>
+      </Collapse>
       {!hideReply && (
         <Card.Footer className={replyTo ? "" : "d-flex justify-content-end"}>
           {replyTo ? (

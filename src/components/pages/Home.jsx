@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home({ name, setName }) {
   const [messages, setMessages] = useState([]);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("Inbox");
   const navigate = useNavigate();
 
   const getInbox = async () => {
@@ -31,8 +31,18 @@ export default function Home({ name, setName }) {
   };
 
   useEffect(() => {
-    getInbox();
-  }, []);
+    const timerId = setInterval(() => {
+      if (title === "Inbox") {
+        getInbox();
+      }
+      if (title === "Sent") {
+        getSent();
+      }
+    }, 3000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [title]);
 
   return (
     <Container className="mt-5">
