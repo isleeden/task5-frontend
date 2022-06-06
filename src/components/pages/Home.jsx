@@ -30,14 +30,19 @@ export default function Home({ name, setName }) {
     navigate("/send");
   };
 
+  const fetchData = () => {
+    if (title === "Inbox") {
+      getInbox();
+    }
+    if (title === "Sent") {
+      getSent();
+    }
+  };
+
   useEffect(() => {
+    fetchData();
     const timerId = setInterval(() => {
-      if (title === "Inbox") {
-        getInbox();
-      }
-      if (title === "Sent") {
-        getSent();
-      }
+      fetchData();
     }, 3000);
     return () => {
       clearInterval(timerId);
